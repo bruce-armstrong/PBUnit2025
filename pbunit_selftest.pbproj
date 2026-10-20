@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project>
+  <Type Name="pb"/>
+  <Application Name="pbunit_selftest"/>
+  <DeployConfigurations OutputDirectory="Build\bin\$(ConfigurationName)">
+    <DeployConfiguration Name="p_pbunit_selftest_exe" Path="selftest\selftest.pbl\p_pbunit_selftest_exe.srj"/>
+  </DeployConfigurations>
+  <Libraries AppEntry="selftest\selftest.pbl">
+    <Library Path="selftest\selftest.pbl"/>
+    <Library Path="pbunitrunner.pbl"/>
+    <Library Path="pbunit.pbl"/>
+    <Library Path="pbunitfunc.pbl"/>
+  </Libraries>
+</Project>

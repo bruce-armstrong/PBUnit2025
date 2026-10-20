@@ -1,0 +1,4 @@
+﻿{
+    "version": "250",
+    "comment": "PBUnit system error function.  Can be used with or without the PBUnit library (it won't do anything and returns a 0 if you do not have PBUnit in your library list)"
+}
