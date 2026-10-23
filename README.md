@@ -103,6 +103,7 @@ that event's name with `test` or it will also run as a test.
 ```
 pwsh -File tests\framework\scripts\Invoke-PBUnit.ps1 -Project mytests.pbproj
 pwsh -File tests\framework\scripts\Invoke-PBUnit.ps1 -Project mytests.pbproj -Filter "n_cst_string_tests.test_trim*"
+pwsh -File tests\framework\scripts\Invoke-PBUnit.ps1 -Project mytests.pbproj -Platform 64
 ```
 
 The script:
@@ -111,8 +112,18 @@ The script:
 2. builds the project with `pbautobuild250.exe /pbc /d` and moves the PBDs next to the exe,
 3. runs the exe and prints `results.txt`; `results.xml` is written beside it.
 
-Options: `-OutDir` (default `build\<project name>`), `-Filter`, `-TimeoutSeconds` (default 300) and
-`-PBAutoBuild` (the path to `pbautobuild250.exe`).
+Options:
+
+| Option | Meaning |
+|---|---|
+| `-Platform` | `32` (the default) or `64`: build a 32-bit or 64-bit exe (PBAutoBuild's `/x` option). The script checks the exe's machine type and stops if it doesn't match. Run the tests both ways if your code calls Windows functions (external functions), since pointer and handle sizes differ |
+| `-OutDir` | Output folder; the default is `build\<project name>`, or `build\<project name>-x64` for a 64-bit build |
+| `-Filter` | Tests to run, as for `/filter` below |
+| `-TimeoutSeconds` | How long the run may take (the default is 300) |
+| `-PBAutoBuild` | The path to `pbautobuild250.exe` |
+
+The `CMP:` line of the project's `.srj` file doesn't choose the platform for a command-line build; `-Platform`
+does.
 
 | Exit code | Meaning |
 |---|---|

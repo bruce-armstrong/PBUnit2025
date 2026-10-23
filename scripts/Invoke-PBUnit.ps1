@@ -15,12 +15,18 @@
     pwsh -File Invoke-PBUnit.ps1 -Project C:\src\MyApp\myapp_tests.pbproj
 .EXAMPLE
     pwsh -File Invoke-PBUnit.ps1 -Project .\myapp_tests.pbproj -Filter "n_cst_string_tests.test_trim*"
+.EXAMPLE
+    pwsh -File Invoke-PBUnit.ps1 -Project .\myapp_tests.pbproj -Platform 64
 #>
 param(
     [Parameter(Mandatory = $true)]
     [string]$Project,
-    # Output folder for the exe, PBDs and results; default build\<project name> beside the project.
+    # Output folder for the exe, PBDs and results; default build\<project name> beside the project
+    # (build\<project name>-x64 for a 64-bit build).
     [string]$OutDir,
+    # Build a 32-bit (the default) or 64-bit exe.
+    [ValidateSet("32", "64")]
+    [string]$Platform = "32",
     # Comma-separated class or class.test names; a trailing * matches a prefix.
     [string]$Filter,
     [int]$TimeoutSeconds = 300,
@@ -38,7 +44,10 @@ $appName   = $xml.Project.Application.Name
 $entryLib  = Join-Path $root $xml.Project.Libraries.AppEntry
 $libraries = @($xml.Project.Libraries.Library | ForEach-Object { Join-Path $root $_.Path })
 
-if (-not $OutDir) { $OutDir = Join-Path $root "build\$projectName" }
+if (-not $OutDir) {
+    $OutDir = Join-Path $root "build\$projectName"
+    if ($Platform -eq "64") { $OutDir += "-x64" }
+}
 New-Item -ItemType Directory -Force $OutDir | Out-Null
 $OutDir   = (Resolve-Path $OutDir).Path
 $exe      = Join-Path $OutDir "$appName.exe"
@@ -110,10 +119,11 @@ if (-not (Test-Path $registryFile) -or (Get-Content $registryFile -Raw) -ne $reg
 
 # --- Build ----------------------------------------------------------------
 Remove-Item $textOut, $junitOut -ErrorAction SilentlyContinue
+Write-Host "Building $projectName ($Platform-bit)"
 Push-Location $root
 try {
     $build = Start-Process -FilePath $PBAutoBuild -NoNewWindow -Wait -PassThru -RedirectStandardOutput $buildLog `
-        -ArgumentList '/pbc', '/d', "`"$projectPath`"", '/o', "`"$exe`""
+        -ArgumentList '/pbc', '/d', "`"$projectPath`"", '/o', "`"$exe`"", '/x', $Platform
 } finally {
     Pop-Location
 }
@@ -128,6 +138,15 @@ $logText = [Text.Encoding]::Unicode.GetString([IO.File]::ReadAllBytes($buildLog)
 if ($build.ExitCode -ne 0 -or $logText -notmatch "Successfully generated") {
     $logText -split "`r?`n" | Where-Object { $_ -match "\[Error\]|error C|failed" } | Select-Object -First 40
     Write-Host "Build failed; see $buildLog"
+    exit 2
+}
+
+# The exe's machine type (PE header) must match the platform asked for.
+$bytes   = [IO.File]::ReadAllBytes($exe)
+$machine = [BitConverter]::ToUInt16($bytes, [BitConverter]::ToInt32($bytes, 0x3C) + 4)
+$built   = switch ($machine) { 0x014C { "32" } 0x8664 { "64" } default { "unknown (0x{0:X4})" -f $machine } }
+if ($built -ne $Platform) {
+    Write-Host "The exe was built as $built-bit, not $Platform-bit."
     exit 2
 }
 
