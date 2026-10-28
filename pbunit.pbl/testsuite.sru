@@ -17,10 +17,9 @@ forward prototypes
 public subroutine addtest (test anv_test)
 public function integer counttestcases ()
 public subroutine run (testresult anv_result)
+public subroutine initialize (string as_classname)
 protected function classdefinition getclassdefinition (string as_classname)
 protected function boolean istestmethod (scriptdefinition asd_scriptdefinition)
-public subroutine initialize (string as_classname)
-public subroutine initialize (string as_classname, string as_methodname)
 end prototypes
 
 public subroutine addtest (test anv_test);this.event preAddTest(anv_test)
@@ -48,6 +47,37 @@ do while inv_testCollection.iterate_into(lnv_iterator, lnv_test)
 	end if
 	lnv_test.run(anv_result)
 loop
+end subroutine
+
+public subroutine initialize (string as_classname);ClassDefinition	lcd_class
+Integer				li, li_scriptCount, li_testCount
+TestCase				lnv_testCase
+
+lcd_class = getClassDefinition(as_className)
+if isValid(lcd_class) then
+else
+	lnv_testCase = create Warning
+	lnv_testCase.initialize("Class name " + as_className + " is not a valid test class.")
+	addTest(lnv_testCase)
+	return 
+end if
+
+li_scriptCount = upperBound(lcd_class.scriptList)
+for li = 1 to li_scriptCount
+	if isTestMethod(lcd_class.scriptList[li]) then
+		li_testCount ++
+		lnv_testCase = create using as_className
+		lnv_testCase.initialize(lcd_class.scriptList[li].name)
+		addTest(lnv_testCase)
+	end if
+next
+
+if li_testCount = 0 then
+	lnv_testCase = create Warning
+	lnv_testCase.initialize("Not tests found in " + as_className + ".")
+	addTest(lnv_testCase)
+	return 
+end if
 end subroutine
 
 protected function classdefinition getclassdefinition (string as_classname);ClassDefinition	lcd_notATestClass
@@ -84,11 +114,6 @@ else
 end if
 
 if lower(mid(asd_scriptDefinition.name, 1, 4)) = "test" then
-//if  lower(asd_scriptDefinition.name) <> "setup" &
-//	or lower(asd_scriptDefinition.name) <> "teardown" &
-//	or lower(asd_scriptDefinition.name) <> "constructor" &
-//	or lower(asd_scriptDefinition.name) <> "destructor" &
-//	then
 else
 	return false
 end if
@@ -99,77 +124,6 @@ end if
 
 return true
 end function
-
-public subroutine initialize (string as_classname);ClassDefinition	lcd_class
-Integer				li, li_scriptCount, li_testCount
-TestCase				lnv_testCase
-
-lcd_class = getClassDefinition(as_className)
-if isValid(lcd_class) then
-else
-	lnv_testCase = create Warning
-	lnv_testCase.initialize("Class name " + as_className + " is not a valid test class.")
-	addTest(lnv_testCase)
-	return 
-end if
-
-li_scriptCount = upperBound(lcd_class.scriptList)
-for li = 1 to li_scriptCount
-	if isTestMethod(lcd_class.scriptList[li]) then
-		li_testCount ++
-		lnv_testCase = create using as_className
-		lnv_testCase.initialize(lcd_class.scriptList[li].name)
-		addTest(lnv_testCase)
-	end if
-next
-
-if li_testCount = 0 then
-	lnv_testCase = create Warning
-	lnv_testCase.initialize("Not tests found in " + as_className + ".")
-	addTest(lnv_testCase)
-	return 
-end if
-end subroutine
-
-public subroutine initialize (string as_classname, string as_methodname);ClassDefinition	lcd_class
-Integer				li, li_scriptCount, li_testCount
-TestCase				lnv_testCase
-
-lcd_class = getClassDefinition(as_className)
-if isValid(lcd_class) then
-else
-	lnv_testCase = create Warning
-	lnv_testCase.initialize("Class name " + as_className + " is not a valid test class.")
-	addTest(lnv_testCase)
-	return 
-end if
-
-li_scriptCount = upperBound(lcd_class.scriptList)
-for li = 1 to li_scriptCount
-	if isTestMethod(lcd_class.scriptList[li]) then
- 
-	 
- 		
-		if as_methodname <> '' then
-			if as_methodname <> lcd_class.scriptList[li].name then continue
-		end if
-			
-		li_testCount ++
-		lnv_testCase = create using as_className
-		lnv_testCase.initialize(lcd_class.scriptList[li].name)
-		addTest(lnv_testCase)
-	end if
-next
-
- 
-
-if li_testCount = 0 then
-	lnv_testCase = create Warning
-	lnv_testCase.initialize("Not tests found in " + as_className + ".")
-	addTest(lnv_testCase)
-	return 
-end if
-end subroutine
 
 on testsuite.create
 call super::create

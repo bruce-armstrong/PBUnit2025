@@ -33,7 +33,7 @@ public subroutine stop ()
 public function boolean shouldstop ()
 public subroutine error (error anv_error)
 public function boolean error ()
-public function test suite ()
+public function Test suite ()
 public function boolean assert (boolean ab_condition)
 public function boolean assert (string as_message, boolean ab_condition)
 public function boolean assertisvalid (string as_message, powerobject apo_object)
@@ -138,20 +138,10 @@ end subroutine
 public function boolean error ();return ib_error
 end function
 
-public function test suite ();TestSuite	lnv_suite
- 
+public function Test suite ();TestSuite	lnv_suite
+
 lnv_suite = create TestSuite
-
-n_pbunit_objectservice  lnv_objectservice
- 
-if lnv_objectservice.of_get_current_test_method_name() = '' then
-	lnv_suite.initialize( className() )
-else
- 
-	lnv_suite.initialize(className(), lnv_objectservice.of_get_current_test_method_name())
-end if
- 
-
+lnv_suite.initialize(className())
 return lnv_suite
 end function
 
@@ -370,13 +360,14 @@ return false
 end function
 
 on testcase.create
-call super::create
+TriggerEvent( this, "constructor" )
 end on
 
 on testcase.destroy
-call super::destroy
+TriggerEvent( this, "destructor" )
 end on
 
 event constructor;call super::constructor;setNull(inv_result)
 ib_stop = false
 end event
+

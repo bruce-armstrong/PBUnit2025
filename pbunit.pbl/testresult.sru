@@ -6,7 +6,6 @@ end forward
 
 shared variables
 Test currentTestCase
-
 end variables
 
 global type testresult from testobject
@@ -21,9 +20,6 @@ Protected pbunit_Collection inv_errorCollection
 Protected Integer ii_numberOfTestsRun = 0
 Private Boolean ib_stop = false
 
-Private Integer ii_numberOfAsserts = 0
-
-Private Decimal{3} idc_secondsOfRun = 0.000
 end variables
 
 forward prototypes
@@ -39,16 +35,9 @@ public subroutine adderror (test anv_test, string as_errormessage)
 public function integer numberOfErrors ()
 public function pbunit_collection errors ()
 public function pbunit_collection failures ()
-public function integer numberofasserts ()
-public subroutine addassert ()
-public function decimal numberofseconds ()
-public subroutine setseconds (decimal adc_seconds)
 end prototypes
 
-event starttest(test anv_test);ii_numberOfTestsRun ++
-
-idc_secondsOfRun = 0.000
-ii_numberOfAsserts = 0
+event starttest;ii_numberOfTestsRun ++
 end event
 
 public subroutine addfailure (test anv_test, string as_errorMessage);TestFailure failure
@@ -61,31 +50,11 @@ end subroutine
 public function integer numberoftestsrun ();return ii_numberOfTestsRun
 end function
 
-public subroutine run (testcase anv_test);
-long ll_EndCPU, ll_StartCPU
-decimal{3} ldc_CPU
-
-
-	ll_StartCPU = CPU ();
-	
-	
-currentTestCase = anv_test
+public subroutine run (testcase anv_test);currentTestCase = anv_test
 this.event startTest(anv_test)
 anv_test.runBare()
-
-	ll_EndCPU = CPU ();
-	
-	ldc_CPU = (ll_EndCPU - ll_StartCPU)/1000.000;
-	idc_secondsOfRun = ldc_CPU
- 
-// endTest in n_cst_testresult will call testRunner window
-//  to do some display stuff.
 this.event endTest(anv_test)
 setNull(currentTestCase)
-
-
-
-  
 
 end subroutine
 
@@ -120,28 +89,12 @@ end function
 public function pbunit_collection failures ();return inv_failureCollection
 end function
 
-public function integer numberofasserts ();return ii_numberOfAsserts
-end function
-
-public subroutine addassert ();ii_numberOfAsserts ++
-
-return 
-end subroutine
-
-public function decimal numberofseconds ();return idc_secondsOfRun
-end function
-
-public subroutine setseconds (decimal adc_seconds);idc_secondsOfRun = adc_seconds
-
-return
-end subroutine
-
 on testresult.create
-call super::create
+TriggerEvent( this, "constructor" )
 end on
 
 on testresult.destroy
-call super::destroy
+TriggerEvent( this, "destructor" )
 end on
 
 event constructor;inv_failureCollection = create pbunit_Collection
