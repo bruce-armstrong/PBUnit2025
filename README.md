@@ -2,8 +2,11 @@
 
 A unit testing framework for PowerBuilder 2025 solution-format projects (`.pbsln` / `.pbproj`).
 
-It is based on [PBUnit](https://sourceforge.net/projects/pbunit/), an xUnit-style framework for PowerBuilder
-that is no longer maintained (see also the [original quick start](https://maonet.wordpress.com/2008/02/05/pbunitpowerunit-quick-start/)).
+It is based on [PBUnit](https://sourceforge.net/projects/pbunit/), John Urberg's port of JUnit to PowerBuilder,
+which is no longer maintained. Development started from a copy of Frank Mao's
+[PowerUnit](https://sourceforge.net/projects/powerunit/) fork
+(see his [quick start](https://maonet.wordpress.com/2008/02/05/pbunitpowerunit-quick-start/)), but the PowerUnit
+additions have since been removed, so the core is PBUnit 3.0's code.
 This version keeps the original `testcase` model and replaces the GUI runner with a command-line runner:
 
 - more assertions: `assertEquals` for common types, `assertTrue`/`assertFalse`/`assertNull`, `assertRowCount`, `assertThrows`
@@ -153,7 +156,8 @@ When running from the IDE, run the script once first so that `n_pbunit_registry`
 ## License
 
 PBUnit is licensed under the [Common Public License 1.0](LICENSE), and so is this modified version.
-The `pbunit.pbl` and `pbunitfunc.pbl` libraries come from the original project; `testcase` has been extended
-with the assertions above. `pbunitrunner.pbl`, `scripts/` and `selftest/` are new.
+The `pbunit.pbl` and `pbunitfunc.pbl` libraries are PBUnit 3.0's code, unchanged except that `testcase` has been
+extended with the assertions above. `pbunitrunner.pbl`, `scripts/` and `selftest/` are new.
+It contains no code from PowerUnit.
 
 Modifications © 2026 Bruce Armstrong.
