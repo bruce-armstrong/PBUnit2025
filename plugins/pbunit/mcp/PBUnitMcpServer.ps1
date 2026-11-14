@@ -17,7 +17,7 @@
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 3
 
-$ServerVersion = "0.1.0"
+$ServerVersion = "0.1.1"
 $PluginRoot    = Split-Path -Parent $PSScriptRoot
 $SummaryScript = Join-Path $PluginRoot "skills/read-results/scripts/Get-PBUnitSummary.ps1"
 $ProjectDir    = if ($env:CLAUDE_PROJECT_DIR) { $env:CLAUDE_PROJECT_DIR } else { (Get-Location).Path }
@@ -155,8 +155,9 @@ function Get-BuildErrors([string]$buildLog) {
     $bytes = [IO.File]::ReadAllBytes($buildLog)
     $text  = if ($bytes.Length -gt 1 -and $bytes[1] -eq 0) { [Text.Encoding]::Unicode.GetString($bytes) } else { [Text.Encoding]::UTF8.GetString($bytes) }
     foreach ($line in $text -split "`r?`n") {
-        if ($line -match '\[Warning\]') { $result.warningCount++; continue }
-        if ($line -notmatch '\[Error\]') { continue }
+        # Case-sensitive: the log level is '[Error]'/'[Warning]'; '[Normal] [ERROR] Compilation failed' is a summary line.
+        if ($line -cmatch '\[Warning\]') { $result.warningCount++; continue }
+        if ($line -cnotmatch '\[Error\]') { continue }
         if ($line -match '\[Error\] (?<file>.+?)\((?<line>\d+),(?<col>\d+)\): (?<where>.*?)(?:\((?<rline>\d+),\d+\))?: (?<code>(?:Error|Warning) C\d+): (?<msg>.*)$') {
             $result.errors += [ordered]@{
                 file = $Matches.file; line = [int]$Matches.line; column = [int]$Matches.col
@@ -236,11 +237,14 @@ function Invoke-RunTests($arguments, $progressToken) {
         }
     }
 
+    $buildErrors = @()
+    if ($outcome -eq "BUILD_FAILED") { $buildErrors = @($build.errors) }
     $data = [ordered]@{
         project = $info.project; platform = $platform; filter = $arguments["filter"]
         outcome = $outcome; exitCode = $exitCode; durationSeconds = $duration
         summary = $summary
-        buildErrors = $(if ($outcome -eq "BUILD_FAILED") { $build.errors } else { @() })
+        # Assigned from a variable: $( ) would turn an empty array into null and a one-item array into the item.
+        buildErrors = $buildErrors
         buildWarningCount = $build.warningCount
         artifacts = [ordered]@{ outDir = $outDir; resultsTxt = $resultsTxt; resultsXml = (Join-Path $outDir "results.xml"); buildLog = (Join-Path $outDir "build.log") }
     }
