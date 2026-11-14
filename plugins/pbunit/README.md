@@ -12,6 +12,24 @@ Skills that teach Claude Code (and other agents that read `SKILL.md` skills) how
 Claude loads a skill automatically when a request matches it, for example "add a regression test for
 this fix" or "why did the unit tests fail?". You can also run one directly, e.g. `/pbunit:run-tests`.
 
+## MCP tools
+
+The plugin also starts an MCP server, `pbunit` (`mcp/PBUnitMcpServer.ps1`, run with `pwsh`), so agents can
+work with the framework without a shell:
+
+| Tool | Use |
+|---|---|
+| `find_projects` | Test projects under a folder, with their test classes and test events; reports a missing framework. No build |
+| `check_source` | Checks `.sru`/`.srw` test sources for layout mistakes the compiler rejects or that stop tests from running, in about a second |
+| `run_tests` | Builds and runs a test project (filter, platform, timeout). Returns the outcome, failures grouped with hints, and compile errors with file and line |
+| `get_results` | The last run's results, without building |
+
+In Claude Code the tools are named `mcp__plugin_pbunit_pbunit__<tool>`. A build can take minutes;
+`run_tests` sends progress notifications while it waits.
+
+`mcp/Test-PBUnitMcpServer.ps1` tests the server over stdio against this repository's self-test project
+(`-SkipBuilds` for the quick checks).
+
 ## Install
 
 In Claude Code:

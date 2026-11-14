@@ -7,7 +7,10 @@ description: Interpret PBUnit test results for PowerBuilder (results.txt / resul
 
 ## 1. Summarize
 
-Run the bundled summary script on the run's output folder (the folder with `results.xml`, `results.txt`
+If the `pbunit` MCP tools are available, `run_tests` and `get_results` already return this summary (with
+compile errors for a failed build); start from that.
+
+Otherwise run the bundled summary script on the run's output folder (the folder with `results.xml`, `results.txt`
 and `build.log`; by default `build\<test project>` beside the `.pbproj`):
 
 ```

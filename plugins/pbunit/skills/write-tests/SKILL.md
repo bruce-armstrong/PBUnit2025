@@ -58,7 +58,9 @@ production code to make it testable.
 
 ## Prove the tests work
 
-1. Run the new tests with the `run-tests` skill, filtered to the new class.
+1. If the `pbunit` MCP tool `check_source` is available, run it on each new or changed file first. It
+   finds layout mistakes in about a second; a build takes a minute or more. Then run the new tests with the
+   `run-tests` skill, filtered to the new class.
 2. For a regression test, make sure it **fails without the fix**: put back the old version of the fixed
    file(s) with `git restore --source=<fix-commit>~1 -- "<path>"`, run the test and see it fail, then
    restore the current version with `git restore -- "<path>"` and see it pass. Check `git status`

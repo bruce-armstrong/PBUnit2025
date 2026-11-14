@@ -18,6 +18,18 @@ description: Build and run PBUnit unit tests for a PowerBuilder 2025 solution pr
      (PowerBuilder creates them when it connects to a repository), delete those empty folders.
   2. Run `git submodule update --init` in the repository root.
 
+## With the pbunit MCP tools
+
+If the `pbunit` MCP server's tools are available, use them instead of running scripts:
+
+- `find_projects` lists the test projects, their test classes and test events, and reports a missing framework.
+- `run_tests` (`project`, `filter`, `platform`, `testTimeoutSeconds`) builds and runs, and returns the outcome
+  (`PASS`, `FAIL`, `BUILD_FAILED`, `TIMEOUT`, `BLOCKED`, `NO_TESTS`, `ERROR`), the failures grouped with hints,
+  and compile errors with file and line.
+- `get_results` returns the last run's results without building.
+
+The rest of this skill (requirements, filters, platforms, what the outcomes mean) applies either way.
+
 ## Find the command
 
 1. Prefer the project's own wrapper if it has one (for example `tests\run_tests.ps1`); read it first to

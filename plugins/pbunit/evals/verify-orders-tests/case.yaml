@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: verify-orders-tests
+context:
+  # Creates the solution (orders_tests.pbproj, src\orders.pbl, tests\orderstests.pbl, tests\framework).
+  # Generated from fixture/ by ../Update-Scaffolds.ps1. Runs only with --scaffold.
+  scaffold_script: scaffold.sh

@@ -420,7 +420,8 @@ When running from the IDE, run the script once first so that `n_pbunit_registry`
 ## Using PBUnit with Claude Code
 
 `plugins/pbunit` is a Claude Code plugin with skills for writing tests, running them, and interpreting the
-results. Install it in Claude Code with:
+results, and an MCP server whose tools let agents find, check, build and run tests and read their results
+without a shell. Install it in Claude Code with:
 
 ```
 /plugin marketplace add bruce-armstrong/PBUnit2025
