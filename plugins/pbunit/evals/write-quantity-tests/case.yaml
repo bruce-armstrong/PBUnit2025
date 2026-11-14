@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: write-quantity-tests
+context:
+  # Creates the solution (qty_tests.pbproj, src\qty.pbl, tests\qtytests.pbl, tests\framework).
+  # Runs only with --scaffold.
+  scaffold_script: scaffold.sh

@@ -1,0 +1,14 @@
+{
+  "name": "pbunit2025",
+  "description": "Claude Code plugins for the PBUnit 2025 unit testing framework for PowerBuilder",
+  "owner": {
+    "name": "Bruce Armstrong"
+  },
+  "plugins": [
+    {
+      "name": "pbunit",
+      "source": "./plugins/pbunit",
+      "description": "Skills for writing, running and interpreting PBUnit unit tests for PowerBuilder 2025 solution projects"
+    }
+  ]
+}
