@@ -49,8 +49,9 @@ folders (`<name>.pbl\` is a folder of `.sru`, `.srw`, `.srd`... files). The `run
 
 [reference/test-doubles.md](reference/test-doubles.md) has the patterns used in practice, with code:
 exposing protected functions through a test descendant, recording side effects instead of performing them,
-faking an external service, counting and cancelling DataWindow retrieves, hosting visual controls in a
-hidden window, and skipping tests whose environment isn't available.
+faking an external service, counting and cancelling DataWindow retrieves, recording the SQL that DataWindows,
+DataStores and embedded SQL would send (`pbunitmocks.pbl`), hosting visual controls in a hidden window, and
+skipping tests whose environment isn't available.
 
 If the code has no protected function you can override for a side effect (a message box, a file dialog,
 an HTTP call), propose moving that call into a small protected function. Ask the user before changing

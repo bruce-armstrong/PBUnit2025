@@ -1,0 +1,4 @@
+﻿{
+    "version": "250",
+    "comment": "PBUnit test doubles for database access: scratch database, DataWindow/DataStore and transaction recorders and spies"
+}

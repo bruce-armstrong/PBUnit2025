@@ -288,6 +288,7 @@ This version keeps the original `testcase` model and replaces the GUI runner wit
 | `pbunit.pbl` | Core: `testcase`, `testsuite`, `testresult` and the assertions |
 | `pbunitfunc.pbl` | `f_catchsystemerror`, for an application's `systemerror` event |
 | `pbunitrunner.pbl` | `n_pbunit_runner` (command line, discovery, reports) and `n_pbunit_result` |
+| `pbunitmocks.pbl` | Test doubles for database access: a scratch database, and recorders and spies for DataWindows, DataStores and transaction objects (optional) |
 | `scripts/Invoke-PBUnit.ps1` | Builds a test project, runs it and prints the results |
 | `selftest/` and `pbunit_selftest.pbproj` | The framework's own tests, and an example test application |
 | `plugins/pbunit/` and `.claude-plugin/` | A Claude Code plugin with skills for writing, running and interpreting tests |
@@ -411,6 +412,92 @@ The test exe can also be run directly, or from the PowerBuilder IDE with these a
 
 When running from the IDE, run the script once first so that `n_pbunit_registry` exists.
 
+## Testing database access
+
+`pbunitmocks.pbl` lets tests check what code does with the database without a test database to maintain.
+Add it to the test project's libraries, after `pbunitfunc.pbl`.
+
+PowerBuilder only generates SQL for a connected transaction, so the tests need a connection, but not a real
+database: `n_pbunit_mockdb` creates an empty scratch database (a Jet `.mdb` in the temp folder) and connects
+to it. Jet is part of 32-bit Windows, so 32-bit test runs need no install; a 64-bit run needs the Microsoft
+Access Database Engine.
+
+| Object | What it does |
+|---|---|
+| `n_pbunit_mockdb` | `of_Connect(transaction)` connects (AutoCommit off) to a scratch database it creates, or to the database in `PBUNIT_MOCKDB_INI`; `of_Execute` runs SQL (create a fixture's tables); `of_Disconnect` rolls back and disconnects. Destroying it deletes the scratch file |
+| `n_pbunit_spyds`, `u_pbunit_spydw` | A DataStore and a DataWindow control whose `inv_recorder` (`n_pbunit_dwrecorder`) records every retrieve and every statement, with its values, and skips it (the default) or lets it through (`PASSTHROUGH`) |
+| `n_pbunit_spytr` | A transaction object whose `inv_recorder` (`n_pbunit_trrecorder`) records embedded and dynamic SQL, and can stop writes (`BLOCKWRITES`) or everything (`BLOCKALL`) |
+
+What a test can do with them:
+
+- **Check what `Update()` would write.** With the recorder skipping (the default), `Update()` records each
+  INSERT, UPDATE and DELETE with its values, sends nothing, returns 1 and resets the row status as a real
+  update does. `of_FindStatement("UPDATE", "amount = 99")` finds one; `of_GetStatementCount("DELETE")` counts them.
+- **Retrieve canned rows.** `of_SetCannedRows(rows)` (ImportString format): a retrieve skips its SELECT,
+  loads these rows instead and returns their count. They are NotModified, like retrieved rows, unless you
+  pass `False`.
+- **Check that code retrieves, or doesn't.** `of_GetRetrieveCount()`, and the recorded SELECT has the argument values.
+- **Watch or stop embedded SQL.** The transaction spy records each statement; a stopped one fails with SQLCode -1.
+  Embedded `SELECT ... INTO` can't return made-up values: create the tables it reads with `of_Execute` instead.
+
+```
+event setup;call super::setup;inv_db = Create n_pbunit_mockdb
+itr = Create transaction
+If Not assertEquals("connect: " + inv_db.of_GetError(), 1, inv_db.of_Connect(itr)) Then Return
+ids_orders = Create n_pbunit_spyds
+ids_orders.DataObject = "d_orders"
+ids_orders.SetTransObject(itr)
+end event
+
+event teardown;call super::teardown;If IsValid(ids_orders) Then Destroy ids_orders
+inv_db.of_Disconnect(itr)
+Destroy itr
+Destroy inv_db
+end event
+
+event test_saves_changed_amount();// Saving a changed amount updates only that order.
+ids_orders.inv_recorder.of_SetCannedRows("1~t42~t10~r~n2~t42~t20~r~n")
+inv_orders.of_Load(ids_orders, 42)
+inv_orders.of_SetAmount(1, 99)
+assertEquals("save", 1, inv_orders.of_Save())
+assertEquals("statements", 1, ids_orders.inv_recorder.of_GetStatementCount())
+assertTrue("update", ids_orders.inv_recorder.of_FindStatement("UPDATE", "amount = 99") > 0)
+end event
+```
+
+**Spying on your own classes.** Code under test often needs its own DataStore, DataWindow or transaction class
+(PFC's `n_ds`, `u_dw` or `n_tr`). Make a test descendant of that class with an `n_pbunit_dwrecorder` (or
+`n_pbunit_trrecorder`) and forward the events, as `n_pbunit_spyds` and `n_pbunit_spytr` do:
+
+```
+event retrievestart;Return inv_recorder.of_OnRetrieveStart()
+event retrieveend;inv_recorder.of_OnRetrieveEnd(This)
+event sqlpreview;Return inv_recorder.of_OnSqlPreview(sqltype, sqlsyntax, row)
+event updatestart;Return inv_recorder.of_OnUpdateStart()
+event dberror;Return inv_recorder.of_OnDbError(sqldbcode, sqlerrtext)
+```
+
+(each followed by `end event`; for a transaction, `sqlpreview` passes `sqlfunc, sqlsyntax`). If the class already
+scripts one of these events, extend it with `call super::<event>` where its behavior is needed (PFC's `u_dw`
+notifies its services in `retrievestart`), but not in `dberror` when the ancestor shows a message box (PFC's
+does): a dialog stops the test run.
+
+**Using another database.** Set the environment variable `PBUNIT_MOCKDB_INI` to an INI file whose `[MockDB]`
+section (or the section named by `PBUNIT_MOCKDB_SECTION`) has `DBMS` and any of `DBParm`, `ServerName`,
+`Database`, `LogId`, `LogPass`, `UserId`, `DBPass` and `Lock`, copied from your application's connection
+(for example SQL Server, or PostgreSQL through PowerBuilder's ADO.NET interface). Use it when tests run SQL
+against real tables and the SQL must be in the production database's dialect. Such a database is shared by
+every test and keeps whatever a test commits, so tests must create (or drop and recreate) what they need.
+
+Things to know, all checked by `selftest/selftest.pbl/n_pbunit_mocks_tests.sru`:
+
+- Without a connection, nothing is recorded: the retrieve or update fails with a database error before any
+  SQL is generated. And a spy suppresses that error, so **`Update()` then returns 1 although nothing was
+  written**; check `of_GetDbErrorCount()`.
+- A skipped retrieve without canned rows returns 0 and clears the rows.
+- Only the DataWindow's own recorder can skip its statements; a transaction spy sees them but can't stop them.
+- The SQL is in the connected database's dialect (Jet's, by default): assert on table, column and value
+  fragments, not on exact spacing.
 ## Using PBUnit with Claude Code
 
 `plugins/pbunit` is a Claude Code plugin with skills for writing tests, running them, and interpreting the
@@ -437,7 +524,7 @@ See [plugins/pbunit/README.md](plugins/pbunit/README.md) for what each skill doe
 
 PBUnit is licensed under the [Common Public License 1.0](LICENSE), and so is this modified version.
 The `pbunit.pbl` and `pbunitfunc.pbl` libraries are PBUnit 3.0's code, unchanged except that `testcase` has been
-extended with the assertions above. `pbunitrunner.pbl`, `scripts/`, `selftest/` and `plugins/` are new.
+extended with the assertions above. `pbunitrunner.pbl`, `pbunitmocks.pbl`, `scripts/`, `selftest/` and `plugins/` are new.
 It contains no code from PowerUnit.
 
 Modifications © 2026 Bruce Armstrong.
