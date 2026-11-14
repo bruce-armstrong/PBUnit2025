@@ -480,7 +480,11 @@ event dberror;Return inv_recorder.of_OnDbError(sqldbcode, sqlerrtext)
 (each followed by `end event`; for a transaction, `sqlpreview` passes `sqlfunc, sqlsyntax`). If the class already
 scripts one of these events, extend it with `call super::<event>` where its behavior is needed (PFC's `u_dw`
 notifies its services in `retrievestart`), but not in `dberror` when the ancestor shows a message box (PFC's
-does): a dialog stops the test run.
+does): a dialog stops the test run. In `sqlpreview`, extend the ancestor and return its answer when it skips
+(2) or stops (1) a statement (`If AncestorReturnValue = 1 Or AncestorReturnValue = 2 Then Return
+AncestorReturnValue`) before calling the recorder: PFC's `u_dw` skips the statement types an update leaves
+out, which the linkage service's two-pass update styles rely on. PFC's `n_cst_dwsrv_linkage_update_tests`
+and `u_pfctest_spydw` (in `tests\pfctests.pbl`) are a worked example.
 
 **Using another database.** Set the environment variable `PBUNIT_MOCKDB_INI` to an INI file whose `[MockDB]`
 section (or the section named by `PBUNIT_MOCKDB_SECTION`) has `DBMS` and any of `DBParm`, `ServerName`,
