@@ -1,5 +1,5 @@
 ---
-description: Write PBUnit tests for a service that retrieves a DataWindow, with no database. Checks that retrieves are counted through retrievestart on the production d_orders (a SQL source; an external copy never fires retrievestart), that nothing connects to a database, and that the expectations match what a cancelled retrieve returns.
+description: Write PBUnit tests for a service that retrieves a DataWindow, with no database. Checks that the tests use the production d_orders, connect to nothing, and prove when the service retrieves and when it doesn't (by any reliable means), with expectations that fit a retrieve that can only fail or be cancelled.
 tags: [write-tests, datawindow]
 max_turns: 40
 timeout_seconds: 900
