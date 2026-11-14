@@ -215,6 +215,28 @@ full API and an example; the essentials:
   `n_pbunit_dwrecorder` (or `n_pbunit_trrecorder`) instance and forward `retrievestart`, `retrieveend`,
   `sqlpreview`, `updatestart` and `dberror` to its `of_On...` functions, as `n_pbunit_spyds` does. Don't call
   the ancestor's `dberror` if it shows a message box (PFC's `u_dw` does).
+- If the class already scripts `sqlpreview`, extend it and keep its answer when it skips (2) or stops (1) a
+  statement. PFC's `u_dw` skips the statement types an update leaves out, which the linkage service's
+  two-pass update styles rely on; replacing its script would record, and break, those passes:
+
+  ```
+  event sqlpreview;call super::sqlpreview;If AncestorReturnValue = 1 Or AncestorReturnValue = 2 Then Return AncestorReturnValue
+  Return inv_recorder.of_OnSqlPreview(sqltype, sqlsyntax, row)
+  end event
+  ```
+- To check the order of statements across several DataWindows (a master and its details), let the spies
+  share one recorder: destroy the second spy's recorder and assign the first one's
+  (`Destroy idw_line.inv_recorder` then `idw_line.inv_recorder = idw_head.inv_recorder`; each spy's destructor
+  checks `IsValid` first). Then build a short description of the sequence, for example
+  `"DELETE pfct_line 3, DELETE pfct_head 3"` (type, table, key), and compare it with `assertEquals`: a
+  failure shows the whole expected and actual order.
 - Assert on fragments (`"amount = 99"`), not whole statements: the SQL is in the connected database's
   dialect. Check `of_GetDbErrorCount()` is 0: with the error suppressed, `Update()` returns 1 even when it
   failed.
+
+A worked example in PFC (OpenSourcePFCLibraries/2025-Solution, `tests\pfctests.pbl`):
+`n_cst_dwsrv_linkage_update_tests` saves a linked master and detail through the linkage service with each
+update style and checks the statement order; `u_pfctest_spydw` is the `u_dw` spy, with the `sqlpreview` and
+`dberror` handling above; `d_pfctest_head` and `d_pfctest_line` are the updatable DataWindows. Nothing reaches
+a database: `n_pbunit_mockdb` connects PFC's `n_tr` to a scratch database and the spies skip every statement.
+Its `TOPDOWN_BOTTOMUP` test was shown to fail by making the linkage service's delete pass run top-down.
