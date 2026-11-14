@@ -1,0 +1,13 @@
+{
+  "name": "pbunit",
+  "displayName": "PBUnit 2025",
+  "version": "1.0.0",
+  "description": "Skills for writing, running and interpreting PBUnit unit tests for PowerBuilder 2025 solution projects",
+  "author": {
+    "name": "Bruce Armstrong"
+  },
+  "homepage": "https://github.com/bruce-armstrong/PBUnit2025",
+  "repository": "https://github.com/bruce-armstrong/PBUnit2025",
+  "license": "CPL-1.0",
+  "keywords": ["powerbuilder", "powerscript", "pbunit", "unit-testing", "pfc"]
+}

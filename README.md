@@ -24,6 +24,7 @@ This version keeps the original `testcase` model and replaces the GUI runner wit
 | `pbunitrunner.pbl` | `n_pbunit_runner` (command line, discovery, reports) and `n_pbunit_result` |
 | `scripts/Invoke-PBUnit.ps1` | Builds a test project, runs it and prints the results |
 | `selftest/` and `pbunit_selftest.pbproj` | The framework's own tests, and an example test application |
+| `plugins/pbunit/` and `.claude-plugin/` | A Claude Code plugin with skills for writing, running and interpreting tests |
 
 ## Adding PBUnit to a project
 
@@ -144,6 +145,18 @@ The test exe can also be run directly, or from the PowerBuilder IDE with these a
 
 When running from the IDE, run the script once first so that `n_pbunit_registry` exists.
 
+## Using PBUnit with Claude Code
+
+`plugins/pbunit` is a Claude Code plugin with skills for writing tests, running them, and interpreting the
+results. Install it in Claude Code with:
+
+```
+/plugin marketplace add bruce-armstrong/PBUnit2025
+/plugin install pbunit@pbunit2025
+```
+
+See [plugins/pbunit/README.md](plugins/pbunit/README.md) for what each skill does.
+
 ## Things to know
 
 - A test that opens a message box or modal window stops the run until the script's timeout. Configure the code
@@ -157,7 +170,7 @@ When running from the IDE, run the script once first so that `n_pbunit_registry`
 
 PBUnit is licensed under the [Common Public License 1.0](LICENSE), and so is this modified version.
 The `pbunit.pbl` and `pbunitfunc.pbl` libraries are PBUnit 3.0's code, unchanged except that `testcase` has been
-extended with the assertions above. `pbunitrunner.pbl`, `scripts/` and `selftest/` are new.
+extended with the assertions above. `pbunitrunner.pbl`, `scripts/`, `selftest/` and `plugins/` are new.
 It contains no code from PowerUnit.
 
 Modifications © 2026 Bruce Armstrong.
