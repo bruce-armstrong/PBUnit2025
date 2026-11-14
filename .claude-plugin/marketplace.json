@@ -8,7 +8,7 @@
     {
       "name": "pbunit",
       "source": "./plugins/pbunit",
-      "description": "Skills for writing, running and interpreting PBUnit unit tests for PowerBuilder 2025 solution projects"
+      "description": "Skills and MCP tools for writing, running and interpreting PBUnit unit tests for PowerBuilder 2025 solution projects"
     }
   ]
 }
