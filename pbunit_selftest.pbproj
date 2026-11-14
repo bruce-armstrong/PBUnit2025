@@ -10,5 +10,6 @@
     <Library Path="pbunitrunner.pbl"/>
     <Library Path="pbunit.pbl"/>
     <Library Path="pbunitfunc.pbl"/>
+    <Library Path="pbunitmocks.pbl"/>
   </Libraries>
 </Project>

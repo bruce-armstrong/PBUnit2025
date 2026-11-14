@@ -128,6 +128,9 @@ The same probe works as a DataStore descendant (`global type n_x_ds from datasto
 `retrievestart` script and `TriggerEvent( this, "constructor" )` create block of a nonvisual object) when
 the code under test takes a DataStore.
 
+This probe only tells you that a retrieve was attempted. To check the SQL and values that are retrieved or
+written, to supply canned rows, or to watch embedded SQL, use `pbunitmocks.pbl` (pattern 10).
+
 Load data with `InsertRow(0)` and `SetItem`, then call `ResetUpdate()` so the rows count as retrieved
 (not new or modified).
 
@@ -192,3 +195,26 @@ end subroutine
 If the side effect is inline in a public function (a `MessageBox` call, `Run`, a file dialog), there is
 nothing to override. Propose extracting it into a small protected function with the same behavior, so a
 test descendant can override it as in pattern 2. Ask the user before changing production code.
+
+## 10. Database access with pbunitmocks.pbl
+
+If the test project lists `pbunitmocks.pbl` (in the framework folder, next to `pbunit.pbl`), use it for
+anything that reads or writes the database. The framework README's "Testing database access" section has the
+full API and an example; the essentials:
+
+- `n_pbunit_mockdb.of_Connect(transaction)` connects to a scratch database it creates (AutoCommit off). Call
+  `of_Disconnect` in `teardown` (it rolls back) and then destroy it (that deletes the file). PowerBuilder
+  only generates SQL for a connected transaction, so the spies record nothing without this.
+- `n_pbunit_spyds` / `u_pbunit_spydw`: `inv_recorder` records every retrieve and statement with its values and,
+  by default, skips it. After `Update()`, check `of_GetStatementCount("UPDATE")` and
+  `of_FindStatement("UPDATE", "amount = 99") > 0`; `of_SetCannedRows("1~t42~t10~r~n")` makes a retrieve
+  return those rows (NotModified) and their count.
+- `n_pbunit_spytr`: records embedded and dynamic SQL; `of_SetMode(BLOCKWRITES)` stops writes (SQLCode -1).
+  Embedded `SELECT ... INTO` can't return made-up values: create its tables with `inv_db.of_Execute`.
+- When the code needs its own class (`n_ds`, `u_dw`, `n_tr`), make a test descendant with an
+  `n_pbunit_dwrecorder` (or `n_pbunit_trrecorder`) instance and forward `retrievestart`, `retrieveend`,
+  `sqlpreview`, `updatestart` and `dberror` to its `of_On...` functions, as `n_pbunit_spyds` does. Don't call
+  the ancestor's `dberror` if it shows a message box (PFC's `u_dw` does).
+- Assert on fragments (`"amount = 99"`), not whole statements: the SQL is in the connected database's
+  dialect. Check `of_GetDbErrorCount()` is 0: with the error suppressed, `Update()` returns 1 even when it
+  failed.

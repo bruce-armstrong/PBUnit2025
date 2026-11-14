@@ -39,7 +39,10 @@
 | `Test <name> was not found.` | The test event is declared but has no script, or is misspelled |
 | A retrieve probe counts 0 retrieves and the code returns -1 | The DataWindow object has an external data source, so `Retrieve()` returns -1 without firing `retrievestart`. Use the production DataWindow object with its SQL source (test-doubles pattern 4) |
 | A test expects 0 or more rows after a retrieve the probe cancelled, but gets -1 | A retrieve cancelled in `retrievestart` returns -1; the test's expectation is wrong (test-doubles pattern 4) |
-| Results change between runs | Test order or shared state: a test depends on files, settings or globals another test left behind. Make `setup`/`teardown` restore everything |
+| A `pbunitmocks` recorder has 0 statements and `of_GetDbErrorCount()` > 0 | The DataWindow or transaction isn't connected: without a connection PowerBuilder stops before generating SQL. Connect it with `n_pbunit_mockdb.of_Connect` and `SetTransObject` it |
+| `Update()` returned 1 in a test, but nothing changed | A spy suppressed a database error (its `dberror` returns 1). Check the recorder's `of_GetDbErrorCount()` |
+| `connect: Could not create a scratch database: neither the Jet driver ... nor the Access Database Engine driver` | A 64-bit test run (`-Platform 64`) on a machine without the Microsoft Access Database Engine. Run 32-bit, install it, or set `PBUNIT_MOCKDB_INI` to another database |
+| A test passes alone but fails after another with "table already exists" | `PBUNIT_MOCKDB_INI` points at a shared database that keeps what an earlier test committed. Drop and recreate the tables the test needs || Results change between runs | Test order or shared state: a test depends on files, settings or globals another test left behind. Make `setup`/`teardown` restore everything |
 | Fails only with `-Platform 64` (or only 32) | Code that calls Windows API functions with the wrong pointer or handle size for that platform |
 
 ## Timing

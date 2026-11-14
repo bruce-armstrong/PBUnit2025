@@ -88,7 +88,9 @@ try {
     $proj = @($r.structuredContent.projects)
     Check "finds exactly the self-test project (not eval fixtures)" ($proj.Count -eq 1 -and $proj[0].project -like "*pbunit_selftest.pbproj") ($proj.project -join ", ")
     Check "framework present" ($proj[0].frameworkPresent -eq $true)
-    Check "lists n_pbunit_assert_tests with 11 tests" ($proj[0].testClasses[0].class -eq "n_pbunit_assert_tests" -and $proj[0].testCount -eq 11) "$($proj[0].testCount)"
+    $assertClass = @($proj[0].testClasses | Where-Object { $_.class -eq "n_pbunit_assert_tests" })
+    Check "lists n_pbunit_assert_tests with its 11 tests" ($assertClass.Count -eq 1 -and @($assertClass[0].tests).Count -eq 11) "$(@($proj[0].testClasses | ForEach-Object { $_.class }) -join ',')"
+    $script:selfTestCount = $proj[0].testCount
     $r = Invoke-Tool $p "find_projects" @{ root = "no\such\folder" }
     Check "missing root is a tool error" ($r.isError -eq $true)
 
@@ -148,7 +150,7 @@ end event
         $r = Invoke-Tool $p "run_tests" @{} -WithProgress
         $s = $r.structuredContent
         Check "self-tests PASS" ($s.outcome -eq "PASS" -and $r.isError -eq $false) "$($s.outcome) $($r.content[0].text)"
-        Check "11 passed" ($s.summary.passed -eq 11)
+        Check "every test passed ($script:selfTestCount, as find_projects counted)" ($s.summary.passed -eq $script:selfTestCount -and $s.summary.tests -eq $script:selfTestCount) "$($s.summary.passed) of $($s.summary.tests)"
         Check "buildErrors is an empty list, not null, when the build succeeds" ($s.ContainsKey("buildErrors") -and $null -ne $s["buildErrors"] -and $s["buildErrors"] -is [object[]] -and $s["buildErrors"].Count -eq 0) "($(if ($null -eq $s["buildErrors"]) { 'null' } else { $s["buildErrors"].GetType().Name }))"
         $r = Invoke-Tool $p "run_tests" @{ filter = "n_pbunit_assert_tests.test_assertequals_d*" }
         Check "filter runs 3 tests" ($r.structuredContent.summary.tests -eq 3) "$($r.structuredContent.summary.tests)"
@@ -160,7 +162,7 @@ end event
         # A copy of the self-test project with a compile error
         $copy = Join-Path $temp "copy"
         New-Item -ItemType Directory $copy | Out-Null
-        foreach ($item in "pbunit.pbl", "pbunitfunc.pbl", "pbunitrunner.pbl", "selftest", "scripts", "pbunit_selftest.pbproj") {
+        foreach ($item in "pbunit.pbl", "pbunitfunc.pbl", "pbunitrunner.pbl", "pbunitmocks.pbl", "selftest", "scripts", "pbunit_selftest.pbproj") {
             Copy-Item -Recurse (Join-Path $repo $item) (Join-Path $copy $item)
         }
         $f = Join-Path $copy "selftest\selftest.pbl\n_pbunit_assert_tests.sru"
