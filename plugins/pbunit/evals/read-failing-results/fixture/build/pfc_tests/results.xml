@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="172" failures="27" errors="6" time="12.562">
+  <testsuite name="n_cst_conversion_tests" tests="3" failures="0" errors="0" time="0.000">
+    <testcase classname="n_cst_conversion_tests" name="test_every_object_type_converts_both_ways" time="0.000" />
+    <testcase classname="n_cst_conversion_tests" name="test_types_added_since_2019" time="0.000" />
+    <testcase classname="n_cst_conversion_tests" name="test_unknown_and_null" time="0.000" />
+  </testsuite>
+  <testsuite name="n_cst_dropdownsearch_tests" tests="5" failures="0" errors="0" time="0.188">
+    <testcase classname="n_cst_dropdownsearch_tests" name="test_values_list_has_tabs" time="0.063" />
+    <testcase classname="n_cst_dropdownsearch_tests" name="test_first_value" time="0.031" />
+    <testcase classname="n_cst_dropdownsearch_tests" name="test_middle_value" time="0.031" />
+    <testcase classname="n_cst_dropdownsearch_tests" name="test_last_value" time="0.032" />
+    <testcase classname="n_cst_dropdownsearch_tests" name="test_value_not_in_list" time="0.031" />
+  </testsuite>
+  <testsuite name="n_cst_dwresize_center_tests" tests="7" failures="0" errors="0" time="0.203">
+    <testcase classname="n_cst_dwresize_center_tests" name="test_fixedcenter" time="0.031" />
+    <testcase classname="n_cst_dwresize_center_tests" name="test_fixedcentertop" time="0.031" />
+    <testcase classname="n_cst_dwresize_center_tests" name="test_fixedcenterbottom" time="0.016" />
+    <testcase classname="n_cst_dwresize_center_tests" name="test_fixedcenterleft" time="0.031" />
+    <testcase classname="n_cst_dwresize_center_tests" name="test_fixedcenterright" time="0.032" />
+    <testcase classname="n_cst_dwresize_center_tests" name="test_fixedright_unchanged" time="0.031" />
+    <testcase classname="n_cst_dwresize_center_tests" name="test_unknown_method" time="0.031" />
+  </testsuite>
+  <testsuite name="n_cst_dwsrv_linkage_tests" tests="6" failures="0" errors="1" time="0.219">
+    <testcase classname="n_cst_dwsrv_linkage_tests" name="test_matching_keys_skips_retrieve" time="0.031" />
+    <testcase classname="n_cst_dwsrv_linkage_tests" name="test_different_keys_retrieves" time="0.032" />
+    <testcase classname="n_cst_dwsrv_linkage_tests" name="test_null_master_key_retrieves" time="0.046" />
+    <testcase classname="n_cst_dwsrv_linkage_tests" name="test_null_detail_key_retrieves" time="0.032" />
+    <testcase classname="n_cst_dwsrv_linkage_tests" name="test_both_keys_null_retrieves" time="0.031" />
+    <testcase classname="n_cst_dwsrv_linkage_tests" name="test_null_key_of_other_datatype_retrieves" time="0.047">
+      <error message="Runtime error 40: Mismatched ANY datatypes in expression: string, double at line 96 in function of_retrievedetails of object pfc_n_cst_dwsrv_linkage. [pfc_n_cst_dwsrv_linkage.of_retrievedetails line 96]">Runtime error 40: Mismatched ANY datatypes in expression: string, double at line 96 in function of_retrievedetails of object pfc_n_cst_dwsrv_linkage. [pfc_n_cst_dwsrv_linkage.of_retrievedetails line 96]</error>
+    </testcase>
+  </testsuite>
+  <testsuite name="n_cst_environment_tests" tests="2" failures="0" errors="0" time="0.000">
+    <testcase classname="n_cst_environment_tests" name="test_build_number" time="0.000" />
+    <testcase classname="n_cst_environment_tests" name="test_version_description" time="0.000" />
+  </testsuite>
+  <testsuite name="n_cst_expression_tests" tests="5" failures="0" errors="0" time="0.062">
+    <testcase classname="n_cst_expression_tests" name="test_expressionstring" time="0.015" />
+    <testcase classname="n_cst_expression_tests" name="test_datastore_expression" time="0.000" />
+    <testcase classname="n_cst_expression_tests" name="test_datastore_comparison" time="0.016" />
+    <testcase classname="n_cst_expression_tests" name="test_datastore_optional_value" time="0.000" />
+    <testcase classname="n_cst_expression_tests" name="test_datawindow_expression" time="0.031" />
+  </testsuite>
+  <testsuite name="n_cst_grid_layout_tests" tests="4" failures="0" errors="0" time="0.235">
+    <testcase classname="n_cst_grid_layout_tests" name="test_saved_for_user" time="0.063" />
+    <testcase classname="n_cst_grid_layout_tests" name="test_saved_when_destroyed" time="0.062" />
+    <testcase classname="n_cst_grid_layout_tests" name="test_other_user_has_no_layout" time="0.047" />
+    <testcase classname="n_cst_grid_layout_tests" name="test_application_level" time="0.063" />
+  </testsuite>
+  <testsuite name="n_cst_help_tests" tests="10" failures="0" errors="0" time="0.015">
+    <testcase classname="n_cst_help_tests" name="test_viewer" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_dialoghelpfile" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_destination" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_url" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_viewercommand" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_compiledhelp" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_path" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_showhelp_inapp" time="0.015" />
+    <testcase classname="n_cst_help_tests" name="test_showhelp_viewer" time="0.000" />
+    <testcase classname="n_cst_help_tests" name="test_showhelp_missing" time="0.000" />
+  </testsuite>
+  <testsuite name="n_cst_language_tests" tests="12" failures="0" errors="0" time="0.062">
+    <testcase classname="n_cst_language_tests" name="test_format" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_no_file" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_load_utf16" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_load_utf8_and_ansi" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_message" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_message_with_values" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_captions" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_translate_window" time="0.016" />
+    <testcase classname="n_cst_language_tests" name="test_translate_menu" time="0.015" />
+    <testcase classname="n_cst_language_tests" name="test_translate_datastore" time="0.016" />
+    <testcase classname="n_cst_language_tests" name="test_pfc_language_file" time="0.000" />
+    <testcase classname="n_cst_language_tests" name="test_application_file" time="0.015" />
+  </testsuite>
+  <testsuite name="n_cst_mru_tests" tests="3" failures="0" errors="0" time="0.063">
+    <testcase classname="n_cst_mru_tests" name="test_empty_list_saved" time="0.016" />
+    <testcase classname="n_cst_mru_tests" name="test_items_read_back" time="0.016" />
+    <testcase classname="n_cst_mru_tests" name="test_removed_items_not_read_back" time="0.031" />
+  </testsuite>
+  <testsuite name="n_cst_oauth2_tests" tests="15" failures="0" errors="0" time="4.672">
+    <testcase classname="n_cst_oauth2_tests" name="test_provider" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_settings" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_pkce" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_authorization_url" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_code_flow" time="0.516" />
+    <testcase classname="n_cst_oauth2_tests" name="test_code_flow_timeout" time="1.078" />
+    <testcase classname="n_cst_oauth2_tests" name="test_device_flow" time="0.015" />
+    <testcase classname="n_cst_oauth2_tests" name="test_device_flow_errors" time="1.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_client_credentials" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_refresh" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_authorize" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_expiry" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_token_errors" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_not_configured" time="0.000" />
+    <testcase classname="n_cst_oauth2_tests" name="test_real_http_client" time="2.063" />
+  </testsuite>
+  <testsuite name="n_cst_openid_logon_tests" tests="9" failures="0" errors="0" time="3.984">
+    <testcase classname="n_cst_openid_logon_tests" name="test_groups_claim" time="0.062" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_decode_id_token" time="0.032" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_id_token_groups" time="0.062" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_id_token_audience" time="0.016" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_pkce" time="0.031" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_random_string" time="0.031" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_authorization_url" time="0.063" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_code_flow" time="3.625" />
+    <testcase classname="n_cst_openid_logon_tests" name="test_code_flow_window" time="0.062" />
+  </testsuite>
+  <testsuite name="n_cst_print_routing_tests" tests="4" failures="0" errors="0" time="0.047">
+    <testcase classname="n_cst_print_routing_tests" name="test_print_reaches_datawindow" time="0.015" />
+    <testcase classname="n_cst_print_routing_tests" name="test_printimmediate_reaches_datawindow" time="0.000" />
+    <testcase classname="n_cst_print_routing_tests" name="test_window_that_prints" time="0.016" />
+    <testcase classname="n_cst_print_routing_tests" name="test_no_datawindow" time="0.016" />
+  </testsuite>
+  <testsuite name="n_cst_redirectlistener_tests" tests="7" failures="0" errors="0" time="1.656">
+    <testcase classname="n_cst_redirectlistener_tests" name="test_start" time="0.000" />
+    <testcase classname="n_cst_redirectlistener_tests" name="test_redirect" time="0.000" />
+    <testcase classname="n_cst_redirectlistener_tests" name="test_ignores_other_requests" time="0.500" />
+    <testcase classname="n_cst_redirectlistener_tests" name="test_error_redirect" time="0.000" />
+    <testcase classname="n_cst_redirectlistener_tests" name="test_timeout" time="1.000" />
+    <testcase classname="n_cst_redirectlistener_tests" name="test_not_started" time="0.000" />
+    <testcase classname="n_cst_redirectlistener_tests" name="test_real_http_client" time="0.156" />
+  </testsuite>
+  <testsuite name="n_cst_resize_minsize_tests" tests="5" failures="0" errors="0" time="0.094">
+    <testcase classname="n_cst_resize_minsize_tests" name="test_off_by_default" time="0.031" />
+    <testcase classname="n_cst_resize_minsize_tests" name="test_minimum_applied" time="0.031" />
+    <testcase classname="n_cst_resize_minsize_tests" name="test_never_lowered" time="0.000" />
+    <testcase classname="n_cst_resize_minsize_tests" name="test_without_minimum" time="0.016" />
+    <testcase classname="n_cst_resize_minsize_tests" name="test_resize_clamped" time="0.016" />
+  </testsuite>
+  <testsuite name="n_cst_resize_origsize_tests" tests="5" failures="0" errors="0" time="0.078">
+    <testcase classname="n_cst_resize_origsize_tests" name="test_at_open" time="0.015" />
+    <testcase classname="n_cst_resize_origsize_tests" name="test_opened_smaller" time="0.016" />
+    <testcase classname="n_cst_resize_origsize_tests" name="test_opened_larger" time="0.016" />
+    <testcase classname="n_cst_resize_origsize_tests" name="test_inherited_size" time="0.015" />
+    <testcase classname="n_cst_resize_origsize_tests" name="test_setresize" time="0.016" />
+  </testsuite>
+  <testsuite name="n_cst_security_controltype_tests" tests="4" failures="0" errors="0" time="0.109">
+    <testcase classname="n_cst_security_controltype_tests" name="test_systemtype_of_descendant" time="0.015" />
+    <testcase classname="n_cst_security_controltype_tests" name="test_gettype_picturehyperlink" time="0.016" />
+    <testcase classname="n_cst_security_controltype_tests" name="test_gettype_descendant" time="0.016" />
+    <testcase classname="n_cst_security_controltype_tests" name="test_gettype_tabbedbar" time="0.062" />
+  </testsuite>
+  <testsuite name="n_cst_security_groups_tests" tests="27" failures="27" errors="0" time="0.000">
+    <testcase classname="n_cst_security_groups_tests" name="test_db_membership_uses_groupings" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_ignores_groupings" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_user_not_in_security_users" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_normalizes_groups" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_default_group" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_unknown_app" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_permissions_follow_supplied_groups" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_group_priority" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_user_rows_override_groups" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_external_permissions_without_precache" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_window_with_ribbonbar" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_frame_bars_skipped" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_unknown_type_visible_only" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_check_functions_by_name" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_check_functions_by_control" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_apply_restrictions_never_enables" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_apply_restrictions_disable" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_apply_restrictions_invisible" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_apply_restrictions_menu" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_default_status_values" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_default_disable_without_settings" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_default_grant_overrides" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_default_invisible" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_default_menu_leaves" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_default_check_functions" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_map_groups_arrays" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+    <testcase classname="n_cst_security_groups_tests" name="test_map_groups_ini" time="0.000">
+      <failure message="Not configured: set PFC_SECURITY_INI to an INI file with the security database connection">Not configured: set PFC_SECURITY_INI to an INI file with the security database connection</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="n_cst_smtpclient_tests" tests="6" failures="0" errors="0" time="0.015">
+    <testcase classname="n_cst_smtpclient_tests" name="test_setoauth2" time="0.015" />
+    <testcase classname="n_cst_smtpclient_tests" name="test_provider_defaults" time="0.000" />
+    <testcase classname="n_cst_smtpclient_tests" name="test_authorize" time="0.000" />
+    <testcase classname="n_cst_smtpclient_tests" name="test_default_scope" time="0.000" />
+    <testcase classname="n_cst_smtpclient_tests" name="test_setaccesstoken" time="0.000" />
+    <testcase classname="n_cst_smtpclient_tests" name="test_send_authorization_failed" time="0.000" />
+  </testsuite>
+  <testsuite name="n_cst_sort_tests" tests="5" failures="0" errors="5" time="0.094">
+    <testcase classname="n_cst_sort_tests" name="test_powerbuilder_secondary_sort" time="0.016">
+      <error message="Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]">Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]</error>
+    </testcase>
+    <testcase classname="n_cst_sort_tests" name="test_primary" time="0.031">
+      <error message="Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]">Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]</error>
+    </testcase>
+    <testcase classname="n_cst_sort_tests" name="test_secondary" time="0.016">
+      <error message="Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]">Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]</error>
+    </testcase>
+    <testcase classname="n_cst_sort_tests" name="test_secondary_clear" time="0.015">
+      <error message="Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]">Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]</error>
+    </testcase>
+    <testcase classname="n_cst_sort_tests" name="test_secondary_keeps_primary" time="0.016">
+      <error message="Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]">Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]</error>
+    </testcase>
+  </testsuite>
+  <testsuite name="n_cst_sortdraw_tests" tests="3" failures="0" errors="0" time="0.047">
+    <testcase classname="n_cst_sortdraw_tests" name="test_getsortdraw" time="0.016" />
+    <testcase classname="n_cst_sortdraw_tests" name="test_colors_and_alignment" time="0.016" />
+    <testcase classname="n_cst_sortdraw_tests" name="test_descendant" time="0.015" />
+  </testsuite>
+  <testsuite name="n_cst_splitbar_tests" tests="6" failures="0" errors="0" time="0.063">
+    <testcase classname="n_cst_splitbar_tests" name="test_drag_from_elsewhere_ignored" time="0.016" />
+    <testcase classname="n_cst_splitbar_tests" name="test_drag_from_bar" time="0.000" />
+    <testcase classname="n_cst_splitbar_tests" name="test_button_released_elsewhere" time="0.016" />
+    <testcase classname="n_cst_splitbar_tests" name="test_live_off_by_default" time="0.015" />
+    <testcase classname="n_cst_splitbar_tests" name="test_live_resize" time="0.000" />
+    <testcase classname="n_cst_splitbar_tests" name="test_resize_on_drop" time="0.016" />
+  </testsuite>
+  <testsuite name="n_cst_statusbar_color_tests" tests="5" failures="0" errors="0" time="0.297">
+    <testcase classname="n_cst_statusbar_color_tests" name="test_default_colors" time="0.094" />
+    <testcase classname="n_cst_statusbar_color_tests" name="test_background_color" time="0.062" />
+    <testcase classname="n_cst_statusbar_color_tests" name="test_text_color" time="0.063" />
+    <testcase classname="n_cst_statusbar_color_tests" name="test_colors_set_before_open" time="0.046" />
+    <testcase classname="n_cst_statusbar_color_tests" name="test_invalid_colors" time="0.032" />
+  </testsuite>
+  <testsuite name="n_cst_statusbar_position_tests" tests="3" failures="0" errors="0" time="0.187">
+    <testcase classname="n_cst_statusbar_position_tests" name="test_over_microhelp" time="0.062" />
+    <testcase classname="n_cst_statusbar_position_tests" name="test_after_resize" time="0.063" />
+    <testcase classname="n_cst_statusbar_position_tests" name="test_narrow_frame" time="0.062" />
+  </testsuite>
+  <testsuite name="n_cst_statusbar_theme_tests" tests="5" failures="0" errors="0" time="0.094">
+    <testcase classname="n_cst_statusbar_theme_tests" name="test_theme_colors" time="0.000" />
+    <testcase classname="n_cst_statusbar_theme_tests" name="test_theme_without_statusbar" time="0.000" />
+    <testcase classname="n_cst_statusbar_theme_tests" name="test_missing_file" time="0.000" />
+    <testcase classname="n_cst_statusbar_theme_tests" name="test_color_order" time="0.000" />
+    <testcase classname="n_cst_statusbar_theme_tests" name="test_applied_theme" time="0.094" />
+  </testsuite>
+  <testsuite name="n_cst_textsize_tests" tests="6" failures="0" errors="0" time="0.078">
+    <testcase classname="n_cst_textsize_tests" name="test_single_line" time="0.000" />
+    <testcase classname="n_cst_textsize_tests" name="test_two_lines" time="0.016" />
+    <testcase classname="n_cst_textsize_tests" name="test_widest_line" time="0.015" />
+    <testcase classname="n_cst_textsize_tests" name="test_line_break_kinds" time="0.016" />
+    <testcase classname="n_cst_textsize_tests" name="test_empty_line" time="0.015" />
+    <testcase classname="n_cst_textsize_tests" name="test_report_widest_line" time="0.016" />
+  </testsuite>
+</testsuites>

@@ -115,10 +115,18 @@ foreach ($c in $byClass) {
 }
 
 # --- Failures grouped by identical first message line ----------------------
-function Get-Hint([string]$message, [string]$status, [object]$classInfo) {
+function Get-Hint([string]$message, [string]$status, [object]$classInfo, [string]$testClass) {
     if ($message -like 'Not configured:*') { return "environment: a prerequisite the test needs is not set up" }
     if ($message -match '^(Class not found|Class does not inherit from testcase)') { return "discovery: the class name or ancestor is wrong" }
-    if ($message -match '^Runtime error') { return "runtime error in the code under test or in the test's setup" }
+    if ($message -match '^Runtime error') {
+        # The runner ends runtime errors with [<object>.<routine> line <n>]
+        if ($message -match '\[(\w+)\.(\w+) line \d+\]\s*$') {
+            $object = $Matches[1]; $routine = $Matches[2]
+            if ($object -ieq $testClass) { return "runtime error in the test class itself ($routine): a test or fixture problem" }
+            return "runtime error in $object.$routine, outside the test class: usually the code under test, unless $object is a test helper"
+        }
+        return "runtime error in the code under test or in the test's setup"
+    }
     if ($status -eq "error") { return "exception thrown by the code under test or by the test" }
     if ($classInfo -and $classInfo.AllFailed -and $classInfo.SameMessage -and $classInfo.Tests -gt 1) {
         return "every test in the class fails the same way: likely setup or fixture"
@@ -136,7 +144,7 @@ foreach ($g in ($bad | Group-Object Status, Message | Sort-Object Count -Descend
         Status  = $first.Status
         Count   = $g.Count
         Message = $first.Message
-        Hint    = (Get-Hint $first.Message $first.Status $classInfo)
+        Hint    = (Get-Hint $first.Message $first.Status $classInfo $first.Class)
         Tests   = $names
     }
 }

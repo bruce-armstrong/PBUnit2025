@@ -1,13 +1,15 @@
 # PowerScript source format for test objects
 
 PowerBuilder 2025 solutions store each object as a text file in its library folder. The compiler is strict
-about the layout, so copy the skeletons here (or an existing object of the same kind) rather than writing
-from memory.
+about the layout (section order, where events are declared, the create/destroy blocks), so copy the
+skeletons here (or an existing object of the same kind) rather than writing from memory.
 
 ## File rules
 
-- Encoding UTF-8 **with** a byte order mark, and CRLF line endings. If you create or edit the file with a
-  tool that writes plain UTF-8 or LF line endings, convert it afterwards in PowerShell:
+- Encoding: the PowerBuilder IDE saves source as UTF-8 with a byte order mark and CRLF line endings.
+  PBAutoBuild also compiles UTF-8 files without a byte order
+  mark and with LF line endings, so a file written that way works, but if you can run PowerShell, convert
+  new files to match the rest of the library:
 
   ```powershell
   $path = "C:\path\to\n_cst_example_tests.sru"

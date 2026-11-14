@@ -17,6 +17,10 @@ pwsh -File "${CLAUDE_SKILL_DIR}/scripts/Get-PBUnitSummary.ps1" -Results "<output
 It prints the outcome, totals, runner `PROBLEM:` lines, the classes with failing tests, and the failures
 grouped by message, with a hint for each group. Add `-Json` for machine-readable output.
 
+If you can't run scripts, read `results.txt` instead: line 1 is `RESULT: PASS|FAIL|ERROR`, line 2 the counts,
+then any `PROBLEM:` lines, then one `PASS`, `FAIL` or `ERROR` line per test (`class.test`) with its messages
+indented below it. Group the failures yourself by class and by message.
+
 Check the `written` time: if it is older than the run you just did, the run didn't get as far as writing
 results, and these are old results. Then the cause is in the script's console output or `build.log`.
 

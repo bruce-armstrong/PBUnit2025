@@ -1,0 +1,208 @@
+﻿RESULT: FAIL
+139 passed, 27 failed, 6 errors  (2026-10-28 15:19:08)
+
+PASS  n_cst_conversion_tests.test_every_object_type_converts_both_ways
+PASS  n_cst_conversion_tests.test_types_added_since_2019
+PASS  n_cst_conversion_tests.test_unknown_and_null
+PASS  n_cst_dropdownsearch_tests.test_values_list_has_tabs
+PASS  n_cst_dropdownsearch_tests.test_first_value
+PASS  n_cst_dropdownsearch_tests.test_middle_value
+PASS  n_cst_dropdownsearch_tests.test_last_value
+PASS  n_cst_dropdownsearch_tests.test_value_not_in_list
+PASS  n_cst_dwresize_center_tests.test_fixedcenter
+PASS  n_cst_dwresize_center_tests.test_fixedcentertop
+PASS  n_cst_dwresize_center_tests.test_fixedcenterbottom
+PASS  n_cst_dwresize_center_tests.test_fixedcenterleft
+PASS  n_cst_dwresize_center_tests.test_fixedcenterright
+PASS  n_cst_dwresize_center_tests.test_fixedright_unchanged
+PASS  n_cst_dwresize_center_tests.test_unknown_method
+PASS  n_cst_dwsrv_linkage_tests.test_matching_keys_skips_retrieve
+PASS  n_cst_dwsrv_linkage_tests.test_different_keys_retrieves
+PASS  n_cst_dwsrv_linkage_tests.test_null_master_key_retrieves
+PASS  n_cst_dwsrv_linkage_tests.test_null_detail_key_retrieves
+PASS  n_cst_dwsrv_linkage_tests.test_both_keys_null_retrieves
+ERROR n_cst_dwsrv_linkage_tests.test_null_key_of_other_datatype_retrieves
+        Runtime error 40: Mismatched ANY datatypes in expression: string, double at line 96 in function of_retrievedetails of object pfc_n_cst_dwsrv_linkage. [pfc_n_cst_dwsrv_linkage.of_retrievedetails line 96]
+PASS  n_cst_environment_tests.test_build_number
+PASS  n_cst_environment_tests.test_version_description
+PASS  n_cst_expression_tests.test_expressionstring
+PASS  n_cst_expression_tests.test_datastore_expression
+PASS  n_cst_expression_tests.test_datastore_comparison
+PASS  n_cst_expression_tests.test_datastore_optional_value
+PASS  n_cst_expression_tests.test_datawindow_expression
+PASS  n_cst_grid_layout_tests.test_saved_for_user
+PASS  n_cst_grid_layout_tests.test_saved_when_destroyed
+PASS  n_cst_grid_layout_tests.test_other_user_has_no_layout
+PASS  n_cst_grid_layout_tests.test_application_level
+PASS  n_cst_help_tests.test_viewer
+PASS  n_cst_help_tests.test_dialoghelpfile
+PASS  n_cst_help_tests.test_destination
+PASS  n_cst_help_tests.test_url
+PASS  n_cst_help_tests.test_viewercommand
+PASS  n_cst_help_tests.test_compiledhelp
+PASS  n_cst_help_tests.test_path
+PASS  n_cst_help_tests.test_showhelp_inapp
+PASS  n_cst_help_tests.test_showhelp_viewer
+PASS  n_cst_help_tests.test_showhelp_missing
+PASS  n_cst_language_tests.test_format
+PASS  n_cst_language_tests.test_no_file
+PASS  n_cst_language_tests.test_load_utf16
+PASS  n_cst_language_tests.test_load_utf8_and_ansi
+PASS  n_cst_language_tests.test_message
+PASS  n_cst_language_tests.test_message_with_values
+PASS  n_cst_language_tests.test_captions
+PASS  n_cst_language_tests.test_translate_window
+PASS  n_cst_language_tests.test_translate_menu
+PASS  n_cst_language_tests.test_translate_datastore
+PASS  n_cst_language_tests.test_pfc_language_file
+PASS  n_cst_language_tests.test_application_file
+PASS  n_cst_mru_tests.test_empty_list_saved
+PASS  n_cst_mru_tests.test_items_read_back
+PASS  n_cst_mru_tests.test_removed_items_not_read_back
+PASS  n_cst_oauth2_tests.test_provider
+PASS  n_cst_oauth2_tests.test_settings
+PASS  n_cst_oauth2_tests.test_pkce
+PASS  n_cst_oauth2_tests.test_authorization_url
+PASS  n_cst_oauth2_tests.test_code_flow
+PASS  n_cst_oauth2_tests.test_code_flow_timeout
+PASS  n_cst_oauth2_tests.test_device_flow
+PASS  n_cst_oauth2_tests.test_device_flow_errors
+PASS  n_cst_oauth2_tests.test_client_credentials
+PASS  n_cst_oauth2_tests.test_refresh
+PASS  n_cst_oauth2_tests.test_authorize
+PASS  n_cst_oauth2_tests.test_expiry
+PASS  n_cst_oauth2_tests.test_token_errors
+PASS  n_cst_oauth2_tests.test_not_configured
+PASS  n_cst_oauth2_tests.test_real_http_client
+PASS  n_cst_openid_logon_tests.test_groups_claim
+PASS  n_cst_openid_logon_tests.test_decode_id_token
+PASS  n_cst_openid_logon_tests.test_id_token_groups
+PASS  n_cst_openid_logon_tests.test_id_token_audience
+PASS  n_cst_openid_logon_tests.test_pkce
+PASS  n_cst_openid_logon_tests.test_random_string
+PASS  n_cst_openid_logon_tests.test_authorization_url
+PASS  n_cst_openid_logon_tests.test_code_flow
+PASS  n_cst_openid_logon_tests.test_code_flow_window
+PASS  n_cst_print_routing_tests.test_print_reaches_datawindow
+PASS  n_cst_print_routing_tests.test_printimmediate_reaches_datawindow
+PASS  n_cst_print_routing_tests.test_window_that_prints
+PASS  n_cst_print_routing_tests.test_no_datawindow
+PASS  n_cst_redirectlistener_tests.test_start
+PASS  n_cst_redirectlistener_tests.test_redirect
+PASS  n_cst_redirectlistener_tests.test_ignores_other_requests
+PASS  n_cst_redirectlistener_tests.test_error_redirect
+PASS  n_cst_redirectlistener_tests.test_timeout
+PASS  n_cst_redirectlistener_tests.test_not_started
+PASS  n_cst_redirectlistener_tests.test_real_http_client
+PASS  n_cst_resize_minsize_tests.test_off_by_default
+PASS  n_cst_resize_minsize_tests.test_minimum_applied
+PASS  n_cst_resize_minsize_tests.test_never_lowered
+PASS  n_cst_resize_minsize_tests.test_without_minimum
+PASS  n_cst_resize_minsize_tests.test_resize_clamped
+PASS  n_cst_resize_origsize_tests.test_at_open
+PASS  n_cst_resize_origsize_tests.test_opened_smaller
+PASS  n_cst_resize_origsize_tests.test_opened_larger
+PASS  n_cst_resize_origsize_tests.test_inherited_size
+PASS  n_cst_resize_origsize_tests.test_setresize
+PASS  n_cst_security_controltype_tests.test_systemtype_of_descendant
+PASS  n_cst_security_controltype_tests.test_gettype_picturehyperlink
+PASS  n_cst_security_controltype_tests.test_gettype_descendant
+PASS  n_cst_security_controltype_tests.test_gettype_tabbedbar
+FAIL  n_cst_security_groups_tests.test_db_membership_uses_groupings
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_ignores_groupings
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_user_not_in_security_users
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_normalizes_groups
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_default_group
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_unknown_app
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_permissions_follow_supplied_groups
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_group_priority
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_user_rows_override_groups
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_external_permissions_without_precache
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_window_with_ribbonbar
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_frame_bars_skipped
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_unknown_type_visible_only
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_check_functions_by_name
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_check_functions_by_control
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_apply_restrictions_never_enables
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_apply_restrictions_disable
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_apply_restrictions_invisible
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_apply_restrictions_menu
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_default_status_values
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_default_disable_without_settings
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_default_grant_overrides
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_default_invisible
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_default_menu_leaves
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_default_check_functions
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_map_groups_arrays
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+FAIL  n_cst_security_groups_tests.test_map_groups_ini
+        Not configured: set PFC_SECURITY_INI to an INI file with the security database connection
+PASS  n_cst_smtpclient_tests.test_setoauth2
+PASS  n_cst_smtpclient_tests.test_provider_defaults
+PASS  n_cst_smtpclient_tests.test_authorize
+PASS  n_cst_smtpclient_tests.test_default_scope
+PASS  n_cst_smtpclient_tests.test_setaccesstoken
+PASS  n_cst_smtpclient_tests.test_send_authorization_failed
+ERROR n_cst_sort_tests.test_powerbuilder_secondary_sort
+        Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]
+ERROR n_cst_sort_tests.test_primary
+        Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]
+ERROR n_cst_sort_tests.test_secondary
+        Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]
+ERROR n_cst_sort_tests.test_secondary_clear
+        Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]
+ERROR n_cst_sort_tests.test_secondary_keeps_primary
+        Runtime error 2: Null object reference at line 9 in setup event of object n_cst_sort_tests. [n_cst_sort_tests.setup line 9]
+PASS  n_cst_sortdraw_tests.test_getsortdraw
+PASS  n_cst_sortdraw_tests.test_colors_and_alignment
+PASS  n_cst_sortdraw_tests.test_descendant
+PASS  n_cst_splitbar_tests.test_drag_from_elsewhere_ignored
+PASS  n_cst_splitbar_tests.test_drag_from_bar
+PASS  n_cst_splitbar_tests.test_button_released_elsewhere
+PASS  n_cst_splitbar_tests.test_live_off_by_default
+PASS  n_cst_splitbar_tests.test_live_resize
+PASS  n_cst_splitbar_tests.test_resize_on_drop
+PASS  n_cst_statusbar_color_tests.test_default_colors
+PASS  n_cst_statusbar_color_tests.test_background_color
+PASS  n_cst_statusbar_color_tests.test_text_color
+PASS  n_cst_statusbar_color_tests.test_colors_set_before_open
+PASS  n_cst_statusbar_color_tests.test_invalid_colors
+PASS  n_cst_statusbar_position_tests.test_over_microhelp
+PASS  n_cst_statusbar_position_tests.test_after_resize
+PASS  n_cst_statusbar_position_tests.test_narrow_frame
+PASS  n_cst_statusbar_theme_tests.test_theme_colors
+PASS  n_cst_statusbar_theme_tests.test_theme_without_statusbar
+PASS  n_cst_statusbar_theme_tests.test_missing_file
+PASS  n_cst_statusbar_theme_tests.test_color_order
+PASS  n_cst_statusbar_theme_tests.test_applied_theme
+PASS  n_cst_textsize_tests.test_single_line
+PASS  n_cst_textsize_tests.test_two_lines
+PASS  n_cst_textsize_tests.test_widest_line
+PASS  n_cst_textsize_tests.test_line_break_kinds
+PASS  n_cst_textsize_tests.test_empty_line
+PASS  n_cst_textsize_tests.test_report_widest_line

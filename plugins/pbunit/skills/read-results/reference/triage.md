@@ -37,7 +37,8 @@
 | `Runtime error <n>: <text> [<object>.<routine> line <n>]` (ERROR) | A PowerBuilder runtime error. If `<object>` is the code under test, it's usually a real bug (for example `Mismatched ANY datatypes in expression` from comparing values of different types, or a null object reference). If it's the test or a helper, the test is wrong. `teardown` still ran |
 | `<ExceptionClass>: <message>` (ERROR) | An exception the code threw and the test didn't expect. If throwing is correct, the test should use `assertThrows` |
 | `Test <name> was not found.` | The test event is declared but has no script, or is misspelled |
-| Retrieve counts stay 0 and the code returns -1 | The DataWindow under test has no transaction object, so `Retrieve()` fails before `retrievestart`. Call `SetTransObject(SQLCA)` in the test's setup (test-doubles pattern 4) |
+| A retrieve probe counts 0 retrieves and the code returns -1 | The DataWindow object has an external data source, so `Retrieve()` returns -1 without firing `retrievestart`. Use the production DataWindow object with its SQL source (test-doubles pattern 4) |
+| A test expects 0 or more rows after a retrieve the probe cancelled, but gets -1 | A retrieve cancelled in `retrievestart` returns -1; the test's expectation is wrong (test-doubles pattern 4) |
 | Results change between runs | Test order or shared state: a test depends on files, settings or globals another test left behind. Make `setup`/`teardown` restore everything |
 | Fails only with `-Platform 64` (or only 32) | Code that calls Windows API functions with the wrong pointer or handle size for that platform |
 

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: read-failing-results
+context:
+  # Creates pfc_tests.pbproj, tests\run_tests.ps1, tests\framework and the run's results in build\pfc_tests.
+  # Generated from fixture/ by ../Update-Scaffolds.ps1. Runs only with --scaffold.
+  scaffold_script: scaffold.sh

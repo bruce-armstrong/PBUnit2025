@@ -25,8 +25,9 @@ folders (`<name>.pbl\` is a folder of `.sru`, `.srw`, `.srd`... files). The `run
   Declare it in the `global type ... from testcase` block and give it a script.
 - Every test runs on a new instance of the class: `setup`, the test event, then `teardown`.
 - Put shared fixtures in instance variables created in `setup` and destroyed or closed in `teardown`.
-- Write the file in the exact format in [reference/source-format.md](reference/source-format.md): UTF-8 with
-  a byte order mark, CRLF line endings, one object per file, file name = object name.
+- Write the file in the layout in [reference/source-format.md](reference/source-format.md): one object per
+  file, file name = object name. Match the encoding and line endings of the existing files in the library
+  where you can (the IDE saves UTF-8 with a byte order mark and CRLF); the compiler also accepts LF.
 
 ## Writing good tests
 

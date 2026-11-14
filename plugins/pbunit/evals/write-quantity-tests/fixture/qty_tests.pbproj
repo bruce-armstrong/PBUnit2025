@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project>
+  <Type Name="pb"/>
+  <Application Name="qtytests"/>
+  <DeployConfigurations OutputDirectory="Build\bin\$(ConfigurationName)">
+    <DeployConfiguration Name="p_qtytests_exe" Path="tests\qtytests.pbl\p_qtytests_exe.srj"/>
+  </DeployConfigurations>
+  <Libraries AppEntry="tests\qtytests.pbl">
+    <Library Path="tests\qtytests.pbl"/>
+    <Library Path="tests\framework\pbunitrunner.pbl"/>
+    <Library Path="tests\framework\pbunit.pbl"/>
+    <Library Path="tests\framework\pbunitfunc.pbl"/>
+    <Library Path="src\qty.pbl"/>
+  </Libraries>
+</Project>

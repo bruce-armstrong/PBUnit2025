@@ -113,9 +113,20 @@ Return 1
 end event
 ```
 
-The DataWindow object must have a SQL source, and the control needs a transaction object even though it
-never connects: `idw_detail.SetTransObject(SQLCA)`. Without one, `Retrieve()` returns -1 before
-`retrievestart` fires, so the count stays 0.
+How `Retrieve()` behaves with this probe (measured with PowerBuilder 2025):
+
+- The DataWindow object **must have a SQL source**. On an external DataWindow, `Retrieve()` returns -1
+  without firing `retrievestart`, so the count stays 0. Use the production DataWindow object; don't make an
+  external copy of it for the test.
+- When `retrievestart` returns 1, `Retrieve()` returns **-1** and leaves the rows as they were. Code under
+  test that passes on Retrieve's return value therefore returns -1 for a counted retrieve; don't expect a
+  row count of 0.
+- No database connection is needed, and `retrievestart` fires without a transaction object. Calling
+  `SetTransObject(SQLCA)` (unconnected) does no harm; PFC's linkage tests do it on `u_dw`.
+
+The same probe works as a DataStore descendant (`global type n_x_ds from datastore`, with the same
+`retrievestart` script and `TriggerEvent( this, "constructor" )` create block of a nonvisual object) when
+the code under test takes a DataStore.
 
 Load data with `InsertRow(0)` and `SetItem`, then call `ResetUpdate()` so the rows count as retrieved
 (not new or modified).
