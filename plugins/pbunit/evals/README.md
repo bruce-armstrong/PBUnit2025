@@ -7,6 +7,7 @@ plugin and again without it, so the report shows what the skills add.
 |---|---|---|
 | `write-quantity-tests` | write-tests | Tests for `n_cst_quantity`, whose invalid-range path calls a protected `of_Warn` that shows a message box. Graders: the test file is in the test library; its forward block and create/destroy blocks have the form the compiler expects; the agent wrote an `of_Warn` override; no invalid-range call is made on a plain `n_cst_quantity`; the clamp and range edge cases are covered |
 | `load-orders-tests` | write-tests | Tests for `n_cst_orderloader`, which retrieves `d_orders` into a DataStore, with no database. Graders: the file's structure; the tests use the production `d_orders`; nothing connects to a database; the tests prove when the loader retrieves and when it doesn't, by any reliable means (counting `retrievestart` or `dberror`, or checking whether rows were cleared), without expecting rows from a retrieve that can't succeed |
+| `verify-orders-tests` | write-tests, run-tests, MCP tools | The `load-orders-tests` task, plus "build and run them and make sure they pass". With the plugin the agent has the MCP tools; without it there is no way to build. Graders: the `results.txt` written by the test exe says PASS and includes the new class; what the tests prove; nothing connects to a database; whether `run_tests` was used and `check_source` came first (not scored) |
 | `read-failing-results` | read-results | A failing run with three groups of failures: 27 tests that need `PFC_SECURITY_INI` (environment), a runtime error in the PFC linkage service (code), and every `n_cst_sort_tests` test failing in the class's own `setup` (fixture). Graders: each group classified correctly, the setting named, and nothing written |
 
 Each case also reports whether its skill fired (not scored). Graders on the transcript look only at text the
@@ -22,6 +23,16 @@ claude plugin eval plugins/pbunit --scaffold --allow-tools Write Edit --no-publi
 ```
 
 Add `--case <name>` to run one case.
+
+`verify-orders-tests` needs the plugin's MCP server, which evals don't start unless asked:
+
+```
+claude plugin eval plugins/pbunit --case verify-orders-tests --scaffold --allow-real-servers --allow-tools Write Edit "mcp__plugin_pbunit_pbunit__*" --no-publish -j 1
+```
+
+`--allow-real-servers` starts `PBUnitMcpServer.ps1` for each run, outside the eval sandbox, as you; its
+`run_tests` runs PBAutoBuild and the test exe in the run's workspace. `-j 1` runs one at a time, so
+builds don't overlap.
 
 - `--scaffold` runs each case's `scaffold.sh`, which creates the PowerBuilder solution in the run's empty
   workspace. On Windows it needs Git Bash, and `bash` must find Git Bash before
