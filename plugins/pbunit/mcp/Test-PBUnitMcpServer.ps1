@@ -149,6 +149,7 @@ end event
         $s = $r.structuredContent
         Check "self-tests PASS" ($s.outcome -eq "PASS" -and $r.isError -eq $false) "$($s.outcome) $($r.content[0].text)"
         Check "11 passed" ($s.summary.passed -eq 11)
+        Check "buildErrors is an empty list, not null, when the build succeeds" ($s.ContainsKey("buildErrors") -and $null -ne $s["buildErrors"] -and $s["buildErrors"] -is [object[]] -and $s["buildErrors"].Count -eq 0) "($(if ($null -eq $s["buildErrors"]) { 'null' } else { $s["buildErrors"].GetType().Name }))"
         $r = Invoke-Tool $p "run_tests" @{ filter = "n_pbunit_assert_tests.test_assertequals_d*" }
         Check "filter runs 3 tests" ($r.structuredContent.summary.tests -eq 3) "$($r.structuredContent.summary.tests)"
         $r = Invoke-Tool $p "run_tests" @{ filter = "no_such_tests" }
@@ -165,7 +166,10 @@ end event
         $f = Join-Path $copy "selftest\selftest.pbl\n_pbunit_assert_tests.sru"
         Write-Source $f ((Get-Content $f -Raw) -replace 'inv_probe\.assertEquals\("abc", "abc"\)', 'inv_probe.assertEqualz("abc", "abc")')
         $r = Invoke-Tool $p "run_tests" @{ project = (Join-Path $copy "pbunit_selftest.pbproj") }
-        $e = @($r.structuredContent.buildErrors)
+        $raw = $r.structuredContent["buildErrors"]
+        Check "buildErrors is a list even with one error" ($raw -is [object[]]) "($(if ($null -eq $raw) { 'null' } else { $raw.GetType().Name }))"
+        Check "exactly the one real compile error (not the log's summary lines)" (@($raw).Count -eq 1) "($(@($raw).Count): $(@($raw) | ConvertTo-Json -Compress))"
+        $e = @($raw)
         Check "a compile error is BUILD_FAILED" ($r.structuredContent.outcome -eq "BUILD_FAILED" -and $r.isError -eq $true) $r.structuredContent.outcome
         Check "the compile error has file, line and message" ($e.Count -ge 1 -and $e[0].file -like "*n_pbunit_assert_tests.sru" -and $e[0].line -gt 0 -and $e[0].message -match "assertequalz") ($e | ConvertTo-Json -Compress)
     }
