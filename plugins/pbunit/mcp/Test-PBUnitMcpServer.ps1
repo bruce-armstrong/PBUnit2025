@@ -24,13 +24,15 @@ function Check([string]$name, [bool]$condition, [string]$detail = "") {
     else { Write-Host "  FAIL  $name $detail"; $script:failures++ }
 }
 
-function Start-Server([string]$projectDir) {
+function Start-Server([string]$projectDir, [string]$pbunitProjectDir = "") {
     $psi = New-Object Diagnostics.ProcessStartInfo
     $psi.FileName = (Get-Command pwsh).Source
     foreach ($a in "-NoLogo", "-NoProfile", "-NonInteractive", "-File", $server) { [void]$psi.ArgumentList.Add($a) }
     $psi.RedirectStandardInput = $true; $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
     $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true
     $psi.Environment["CLAUDE_PROJECT_DIR"] = $projectDir
+    [void]$psi.Environment.Remove("PBUNIT_PROJECT_DIR")
+    if ($pbunitProjectDir) { $psi.Environment["PBUNIT_PROJECT_DIR"] = $pbunitProjectDir }
     $psi.StandardOutputEncoding = New-Object Text.UTF8Encoding($false)
     $p = [Diagnostics.Process]::Start($psi)
     $p.StandardInput.AutoFlush = $true
@@ -93,6 +95,17 @@ try {
     $script:selfTestCount = $proj[0].testCount
     $r = Invoke-Tool $p "find_projects" @{ root = "no\such\folder" }
     Check "missing root is a tool error" ($r.isError -eq $true)
+
+    # PBUNIT_PROJECT_DIR (for clients without a project folder) wins over CLAUDE_PROJECT_DIR
+    $q = Start-Server $temp $repo
+    try {
+        [void](Invoke-Rpc $q "initialize" ([ordered]@{ protocolVersion = "2025-06-18"; capabilities = @{}; clientInfo = @{ name = "test"; version = "1" } }))
+        $r = Invoke-Tool $q "find_projects" @{}
+        Check "PBUNIT_PROJECT_DIR sets the project folder" (@($r.structuredContent.projects).Count -eq 1 -and $r.structuredContent.projects[0].project -like "*pbunit_selftest.pbproj") $r.content[0].text
+    } finally {
+        $q.StandardInput.Close()
+        if (-not $q.WaitForExit(10000)) { $q.Kill($true) }
+    }
 
     Write-Host "check_source"
     $r = Invoke-Tool $p "check_source" @{ path = "selftest\selftest.pbl" }

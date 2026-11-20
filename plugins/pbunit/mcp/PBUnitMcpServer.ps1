@@ -11,16 +11,20 @@
       run_tests       Build and run a test project with the framework's Invoke-PBUnit.ps1; structured results
       get_results     The results of the last run of a test project, without building
 
-    Relative paths are resolved against CLAUDE_PROJECT_DIR (set by Claude Code) or the current folder.
+    Relative paths, and tools called without a path, use the project folder: PBUNIT_PROJECT_DIR if set
+    (for clients with no project folder, such as Claude Desktop), else CLAUDE_PROJECT_DIR (set by Claude
+    Code), else the current folder.
     Nothing but protocol messages may be written to stdout; diagnostics go to stderr.
 #>
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 3
 
-$ServerVersion = "0.1.1"
+$ServerVersion = "0.1.2"
 $PluginRoot    = Split-Path -Parent $PSScriptRoot
 $SummaryScript = Join-Path $PluginRoot "skills/read-results/scripts/Get-PBUnitSummary.ps1"
-$ProjectDir    = if ($env:CLAUDE_PROJECT_DIR) { $env:CLAUDE_PROJECT_DIR } else { (Get-Location).Path }
+$ProjectDir    = if ($env:PBUNIT_PROJECT_DIR) { $env:PBUNIT_PROJECT_DIR }
+                 elseif ($env:CLAUDE_PROJECT_DIR) { $env:CLAUDE_PROJECT_DIR }
+                 else { (Get-Location).Path }
 
 $Utf8NoBom = New-Object Text.UTF8Encoding($false)
 $StdIn  = New-Object IO.StreamReader([Console]::OpenStandardInput(), $Utf8NoBom)
