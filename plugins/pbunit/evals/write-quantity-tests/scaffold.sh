@@ -513,7 +513,8 @@ without a shell. Install it in Claude Code with:
 /plugin install pbunit@pbunit2025
 ```
 
-See [plugins/pbunit/README.md](plugins/pbunit/README.md) for what each skill does.
+See [plugins/pbunit/README.md](plugins/pbunit/README.md) for what each skill does, and for the MCP server: its
+tools, how Claude Code starts it, and how to add it to Claude Desktop, VS Code and other MCP clients.
 
 ## Things to know
 
